@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T.A.S — Trust for Advanced Skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #eef4f2;
+      --bg-alt:     #f7faf9;
+      --white:      #ffffff;
+      --teal:       #0d6e63;
+      --teal-dark:  #095249;
+      --teal-light: #d0ece8;
+      --text:       #0d1f2d;
+      --text-sub:   #4a6572;
+      --border:     #c8ddd9;
+      --shadow:     0 2px 16px rgba(13,110,99,0.08);
+      --shadow-lg:  0 4px 32px rgba(13,110,99,0.12);
+      --radius:     12px;
+      --radius-sm:  8px;
+      --ff-head:    'Playfair Display', Georgia, serif;
+      --ff-body:    'DM Sans', sans-serif;
+      --transition: 0.24s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--ff-body); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
+    section { padding: 88px 0; }
+    .section-label { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+    .section-title { font-family: var(--ff-head); font-size: clamp(1.7rem, 2.8vw, 2.2rem); font-weight: 700; color: var(--text); line-height: 1.22; margin-bottom: 12px; }
+    .section-sub { color: var(--text-sub); font-size: 0.97rem; font-weight: 300; max-width: 580px; }
+    .section-header { margin-bottom: 52px; }
+    .divider { width: 40px; height: 2.5px; background: var(--teal); border-radius: 2px; margin: 14px 0 0; }
+
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; font-family: var(--ff-body); cursor: pointer; transition: all var(--transition); border: 2px solid transparent; white-space: nowrap; }
+    .btn-primary { background: var(--teal); color: var(--white); border-color: var(--teal); }
+    .btn-primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,110,99,0.28); }
+    .btn-outline { background: transparent; color: var(--teal); border-color: var(--teal); }
+    .btn-outline:hover { background: var(--teal); color: var(--white); }
+    .btn-lg { padding: 13px 28px; font-size: 0.95rem; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(238,244,242,0.94); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; max-width: 1140px; margin: 0 auto; padding: 0 32px; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-logo-badge { width: 38px; height: 38px; background: var(--teal); color: var(--white); font-family: var(--ff-head); font-size: 16px; font-weight: 700; border-radius: var(--radius-sm); display: grid; place-items: center; }
+    .nav-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .nav-brand-abbr { font-family: var(--ff-head); font-size: 1rem; font-weight: 700; color: var(--text); letter-spacing: 0.05em; }
+    .nav-brand-full { font-size: 0.65rem; font-weight: 500; color: var(--teal); letter-spacing: 0.04em; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-sub); padding: 6px 16px; border-radius: 6px; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--teal); font-weight: 600; }
+    .nav-ctas { display: flex; align-items: center; gap: 10px; }
+
+    /* Waitlist button — slightly distinct to signal "not open yet" */
+    .btn-waitlist {
+      background: var(--teal);
+      color: var(--white);
+      border-color: var(--teal);
+      position: relative;
+    }
+    .btn-waitlist:hover { background: var(--teal-dark); border-color: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,110,99,0.28); }
+    .btn-waitlist .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.22);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    /* HERO */
+    .hero { padding: 72px 0 80px; }
+    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .hero-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; }
+    .hero-pill::before { content: ''; width: 7px; height: 7px; background: var(--teal); border-radius: 50%; }
+    .hero-title { font-family: var(--ff-head); font-size: clamp(2rem, 3.8vw, 3rem); font-weight: 700; line-height: 1.18; color: var(--text); margin-bottom: 20px; }
+    .hero-title em { font-style: italic; color: var(--teal); }
+    .hero-desc { font-size: 1rem; color: var(--text-sub); font-weight: 300; line-height: 1.75; margin-bottom: 34px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Pipeline card */
+    .pipeline-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 32px 28px; }
+    .pipeline-card-title { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); text-align: center; margin-bottom: 24px; }
+    .pipeline-steps-list { list-style: none; }
+    .pipeline-item { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; position: relative; }
+    .pipeline-item:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 52px; width: 2px; height: calc(100% - 38px); background: var(--border); }
+    .pipeline-icon-wrap { width: 38px; height: 38px; background: var(--teal-light); border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 1.1rem; flex-shrink: 0; position: relative; z-index: 1; }
+    .pipeline-item-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .pipeline-item-text span { font-size: 0.8rem; color: var(--text-sub); font-weight: 300; }
+
+    /* CHALLENGE */
+    .challenge { background: var(--white); }
+    .challenge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .challenge-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; transition: box-shadow var(--transition); }
+    .challenge-card:hover { box-shadow: var(--shadow); }
+    .challenge-num { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; color: var(--teal); background: var(--teal-light); display: inline-block; padding: 3px 10px; border-radius: 100px; margin-bottom: 12px; }
+    .challenge-card h4 { font-family: var(--ff-head); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .challenge-card p { font-size: 0.9rem; color: var(--text-sub); font-weight: 300; line-height: 1.7; }
+    .bridge-box { background: linear-gradient(135deg, var(--teal-light), #e8f4f2); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); padding: 24px 28px; display: flex; align-items: center; gap: 18px; }
+    .bridge-icon { font-size: 2rem; flex-shrink: 0; }
+    .bridge-box p { font-size: 0.95rem; color: var(--text); line-height: 1.65; }
+    .bridge-box strong { color: var(--teal); }
+
+    /* IMPACT */
+    .impact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .impact-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 24px; text-align: center; box-shadow: var(--shadow); transition: transform var(--transition), box-shadow var(--transition); }
+    .impact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .impact-num { font-family: var(--ff-head); font-size: 2.6rem; font-weight: 700; color: var(--teal); line-height: 1; margin-bottom: 8px; }
+    .impact-label { font-size: 0.82rem; color: var(--text-sub); }
+
+    /* PARTNERS */
+    .partners { background: var(--white); }
+    .partners-row { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .partner-logo { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 28px; height: 70px; display: flex; align-items: center; justify-content: center; transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition); }
+    .partner-logo:hover { border-color: var(--teal); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .partner-logo img { max-height: 34px; width: auto; filter: grayscale(0.2) opacity(0.85); transition: filter var(--transition); }
+    .partner-logo:hover img { filter: none; }
+
+    /* PRINCIPLES */
+    .principles { background: var(--bg-alt); }
+    .principles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .principle-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 34px 28px; box-shadow: var(--shadow); transition: transform var(--transition), box-shadow var(--transition); }
+    .principle-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .principle-icon-wrap { width: 48px; height: 48px; background: var(--teal-light); border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 1.4rem; margin-bottom: 18px; }
+    .principle-card h4 { font-family: var(--ff-head); font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .principle-card p { font-size: 0.88rem; color: var(--text-sub); font-weight: 300; line-height: 1.72; }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--white); }
+    .testimonials-track-wrap { overflow: hidden; mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%); }
+    .testimonials-track { display: flex; gap: 22px; animation: scroll-left 44s linear infinite; width: max-content; }
+    .testimonials-track:hover { animation-play-state: paused; }
+    @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .testimonial-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; width: 310px; flex-shrink: 0; }
+    .testimonial-quote { font-size: 0.88rem; color: var(--text-sub); font-weight: 300; line-height: 1.72; margin-bottom: 20px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 11px; }
+    .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; font-size: 0.72rem; font-weight: 700; color: var(--white); flex-shrink: 0; }
+    .author-info strong { display: block; font-size: 0.87rem; color: var(--text); font-weight: 600; }
+    .author-info span { font-size: 0.74rem; color: var(--text-sub); }
+
+    /* CTA */
+    .cta-section { background: var(--teal); padding: 80px 0; text-align: center; }
+    .cta-section .section-label { color: var(--teal-light); }
+    .cta-section .section-title { color: var(--white); }
+    .cta-section .section-sub { color: rgba(255,255,255,0.75); margin: 0 auto 36px; }
+    .cta-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-cta-white { background: var(--white); color: var(--teal); border-color: var(--white); }
+    .btn-cta-white:hover { background: var(--teal-light); border-color: var(--teal-light); }
+    .btn-cta-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.6); }
+    .btn-cta-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* FOOTER */
+    footer { background: var(--text); color: rgba(255,255,255,0.75); padding: 60px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 44px; }
+    .footer-brand-abbr { font-family: var(--ff-head); font-size: 1.1rem; color: var(--white); font-weight: 700; margin-bottom: 2px; }
+    .footer-brand-full { font-size: 0.68rem; color: var(--teal-light); letter-spacing: 0.06em; margin-bottom: 14px; }
+    .footer-desc { font-size: 0.84rem; font-weight: 300; line-height: 1.7; }
+    .footer-col h5 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-links a { font-size: 0.86rem; font-weight: 300; color: rgba(255,255,255,0.65); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.77rem; }
+    .footer-bottom a { color: rgba(255,255,255,0.55); transition: color var(--transition); }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ══════════════════════════════════════
+       WAITLIST MODAL
+    ══════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 31, 45, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 64px rgba(13,31,45,0.22);
+      width: 100%;
+      max-width: 460px;
+      padding: 40px 36px 36px;
+      position: relative;
+      transform: translateY(16px) scale(0.98);
+      transition: transform 0.28s ease;
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-sub);
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 4px;
+      transition: color var(--transition);
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .modal-icon {
+      width: 52px; height: 52px;
+      background: var(--teal-light);
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      margin-bottom: 18px;
+    }
+
+    .modal-title {
+      font-family: var(--ff-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .modal-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      font-weight: 300;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .modal-batch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: var(--teal);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 7px;
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--ff-body);
+      font-size: 0.93rem;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .form-group input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13,110,99,0.1);
+      background: var(--white);
+    }
+
+    .form-group input.error { border-color: #d9534f; }
+    .form-error-msg { font-size: 0.78rem; color: #d9534f; margin-top: 5px; display: none; }
+    .form-group.has-error .form-error-msg { display: block; }
+
+    .modal-submit {
+      width: 100%;
+      padding: 13px;
+      margin-top: 8px;
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--ff-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .modal-submit:hover:not(:disabled) { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,110,99,0.28); }
+    .modal-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+    .modal-privacy {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      text-align: center;
+      margin-top: 14px;
+      font-weight: 300;
+    }
+
+    /* Success state */
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 12px 0 4px;
+    }
+
+    .success-icon {
+      width: 64px; height: 64px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+
+    .modal-success h3 {
+      font-family: var(--ff-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .modal-success p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    .modal-success .teal { color: var(--teal); font-weight: 600; }
+
+    /* Spinner */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ══════════════════════════════════════
+       EMPLOYER CONTACT MODAL
+    ══════════════════════════════════════ */
+    .emp-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 31, 45, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .emp-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .emp-modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 64px rgba(13,31,45,0.22);
+      width: 100%;
+      max-width: 500px;
+      padding: 40px 36px 36px;
+      position: relative;
+      transform: translateY(16px) scale(0.98);
+      transition: transform 0.28s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .emp-modal-overlay.open .emp-modal { transform: translateY(0) scale(1); }
+
+    .emp-modal-close {
+      position: absolute;
+      top: 16px; right: 18px;
+      background: none; border: none; cursor: pointer;
+      color: var(--text-sub); font-size: 1.4rem; line-height: 1; padding: 4px;
+      transition: color var(--transition);
+    }
+    .emp-modal-close:hover { color: var(--text); }
+
+    .emp-modal-icon {
+      width: 52px; height: 52px;
+      background: var(--teal-light);
+      border-radius: var(--radius-sm);
+      display: grid; place-items: center;
+      font-size: 1.5rem; margin-bottom: 18px;
+    }
+
+    .emp-modal-title {
+      font-family: var(--ff-head);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--text); margin-bottom: 6px; line-height: 1.25;
+    }
+
+    .emp-modal-subtitle {
+      font-size: 0.88rem; color: var(--text-sub);
+      font-weight: 300; margin-bottom: 26px; line-height: 1.6;
+    }
+
+    /* Intent selector pills */
+    .intent-label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--text); margin-bottom: 10px; letter-spacing: 0.02em;
+    }
+
+    .intent-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
+    }
+
+    .intent-pill {
+      padding: 7px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--text-sub);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all var(--transition);
+      user-select: none;
+    }
+    .intent-pill:hover { border-color: var(--teal); color: var(--teal); }
+    .intent-pill.selected {
+      background: var(--teal); color: var(--white);
+      border-color: var(--teal); font-weight: 600;
+    }
+
+    .emp-form-group { margin-bottom: 16px; }
+    .emp-form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--text); margin-bottom: 7px; letter-spacing: 0.02em;
+    }
+    .emp-form-group input,
+    .emp-form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--ff-body); font-size: 0.93rem;
+      color: var(--text); background: var(--bg); outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: vertical;
+    }
+    .emp-form-group input:focus,
+    .emp-form-group textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13,110,99,0.1);
+      background: var(--white);
+    }
+    .emp-form-group input.error,
+    .emp-form-group textarea.error { border-color: #d9534f; }
+    .emp-form-error { font-size: 0.78rem; color: #d9534f; margin-top: 5px; display: none; }
+    .emp-form-group.has-error .emp-form-error { display: block; }
+
+    .emp-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .emp-submit {
+      width: 100%; padding: 13px; margin-top: 8px;
+      background: var(--teal); color: var(--white);
+      border: none; border-radius: var(--radius-sm);
+      font-family: var(--ff-body); font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .emp-submit:hover:not(:disabled) { background: var(--teal-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,110,99,0.28); }
+    .emp-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+    .emp-whatsapp-link {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 14px; font-size: 0.82rem; color: var(--text-sub);
+      font-weight: 400; text-align: center;
+    }
+    .emp-whatsapp-link a {
+      color: #25a244; font-weight: 600;
+      transition: color var(--transition);
+    }
+    .emp-whatsapp-link a:hover { color: #1a7a33; }
+
+    /* Employer success state */
+    .emp-modal-success {
+      display: none; text-align: center; padding: 12px 0 4px;
+    }
+    .emp-success-icon {
+      width: 64px; height: 64px;
+      background: var(--teal-light); border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 2rem; margin: 0 auto 20px;
+    }
+    .emp-modal-success h3 {
+      font-family: var(--ff-head); font-size: 1.3rem;
+      font-weight: 700; color: var(--text); margin-bottom: 10px;
+    }
+    .emp-modal-success p { font-size: 0.9rem; color: var(--text-sub); font-weight: 300; line-height: 1.65; }
+    .emp-modal-success .teal { color: var(--teal); font-weight: 600; }
+
+    .emp-spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.7s linear infinite; display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .challenge-grid { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: repeat(2,1fr); }
+      .principles-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-ctas .btn-outline { display: none; }
+      .hero-title { font-size: 2rem; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-actions { flex-direction: column; }
+      .modal { padding: 32px 24px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ EMPLOYER CONTACT MODAL ═══════════════════════ -->
+<div class="emp-modal-overlay" id="empModalOverlay" role="dialog" aria-modal="true" aria-labelledby="empModalTitle">
+  <div class="emp-modal" id="empModal">
+    <button class="emp-modal-close" id="empModalClose" aria-label="Close">&#x2715;</button>
+
+    <!-- Form view -->
+    <div id="empFormView">
+      <div class="emp-modal-icon">🏢</div>
+      <h2 class="emp-modal-title" id="empModalTitle">Connect with T.A.S</h2>
+      <p class="emp-modal-subtitle">Tell us a little about what you're looking for — we'll get back to you within one business day.</p>
+
+      <!-- Intent selector -->
+      <span class="intent-label">What best describes your interest?</span>
+      <div class="intent-pills" id="intentPills">
+        <div class="intent-pill selected" data-value="Hire Graduates">🎓 Hire Graduates</div>
+        <div class="intent-pill" data-value="Internship Programme">💼 Internship Programme</div>
+        <div class="intent-pill" data-value="Co-design Curriculum">📚 Co-design Curriculum</div>
+        <div class="intent-pill" data-value="Sponsor Training">🤝 Sponsor Training</div>
+        <div class="intent-pill" data-value="Other">💬 Other</div>
+      </div>
+
+      <div class="emp-form-row">
+        <div class="emp-form-group" id="empNameGroup">
+          <label for="emp-name">Your Name</label>
+          <input type="text" id="emp-name" placeholder="e.g. Ananya Rao" maxlength="100" autocomplete="name" />
+          <div class="emp-form-error" id="empNameError">Please enter your name.</div>
+        </div>
+        <div class="emp-form-group" id="empCompanyGroup">
+          <label for="emp-company">Company Name</label>
+          <input type="text" id="emp-company" placeholder="e.g. Synopsys India" maxlength="120" />
+          <div class="emp-form-error" id="empCompanyError">Please enter your company name.</div>
+        </div>
+      </div>
+
+      <div class="emp-form-group" id="empEmailGroup">
+        <label for="emp-email">Work Email</label>
+        <input type="email" id="emp-email" placeholder="e.g. ananya@synopsys.com" maxlength="254" autocomplete="email" />
+        <div class="emp-form-error" id="empEmailError">Please enter a valid work email.</div>
+      </div>
+
+      <div class="emp-form-group" id="empMsgGroup">
+        <label for="emp-msg">Brief Message <span style="font-weight:300;color:var(--text-sub)">(optional)</span></label>
+        <textarea id="emp-msg" rows="3" placeholder="e.g. We're looking to hire 3–4 VLSI engineers from your next batch..." maxlength="800"></textarea>
+      </div>
+
+      <button class="emp-submit" id="empSubmit" type="button">
+        <span id="empSubmitLabel">Send Enquiry →</span>
+        <div class="emp-spinner" id="empSpinner"></div>
+      </button>
+
+      <p class="emp-whatsapp-link">
+        Prefer a quick chat?
+        <a href="https://wa.me/918341108696" target="_blank" rel="noopener">
+          📱 WhatsApp us directly
+        </a>
+      </p>
+    </div>
+
+    <!-- Success view -->
+    <div class="emp-modal-success" id="empSuccessView">
+      <div class="emp-success-icon">✅</div>
+      <h3>Enquiry Received!</h3>
+      <p>
+        Thank you for reaching out. A member of the <span class="teal">T.A.S team</span>
+        will get back to you within one business day.<br/><br/>
+        In the meantime, feel free to WhatsApp us at
+        <a href="https://wa.me/918341108696" style="color:var(--teal);font-weight:600;">+91 83411 08696</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ WAITLIST MODAL ════════════════════════════════ -->
+<div class="modal-overlay" id="waitlistOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal" id="waitlistModal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+
+    <!-- Form view -->
+    <div id="modalFormView">
+      <div class="modal-icon">🎓</div>
+      <h2 class="modal-title" id="modalTitle">Join the June 2026 Waitlist</h2>
+      <p class="modal-subtitle">Applications are currently closed. Leave your details and we'll notify you as soon as the next batch opens.</p>
+      <div class="modal-batch-badge">
+        <span>📅</span> Next Batch: June 2026
+      </div>
+
+      <div class="form-group" id="nameGroup">
+        <label for="wl-name">Full Name</label>
+        <input
+          type="text"
+          id="wl-name"
+          placeholder="e.g. Priya Sharma"
+          maxlength="100"
+          autocomplete="name"
+        />
+        <div class="form-error-msg" id="nameError">Please enter your full name.</div>
+      </div>
+
+      <div class="form-group" id="emailGroup">
+        <label for="wl-email">Email Address</label>
+        <input
+          type="email"
+          id="wl-email"
+          placeholder="e.g. priya@email.com"
+          maxlength="254"
+          autocomplete="email"
+        />
+        <div class="form-error-msg" id="emailError">Please enter a valid email address.</div>
+      </div>
+
+      <button class="modal-submit" id="modalSubmit" type="button">
+        <span id="submitLabel">Notify Me in June 2026</span>
+        <div class="spinner" id="submitSpinner"></div>
+      </button>
+
+      <p class="modal-privacy">🔒 Your details are stored securely and never shared.</p>
+    </div>
+
+    <!-- Success view -->
+    <div class="modal-success" id="modalSuccessView">
+      <div class="success-icon">✅</div>
+      <h3>You're on the list!</h3>
+      <p>
+        Thank you! We'll notify you in <span class="teal">June 2026</span> when
+        applications for the next batch open.<br/><br/>
+        Keep an eye on your inbox.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAV ══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <div class="nav-logo-badge">T</div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-abbr">T.A.S</span>
+        <span class="nav-brand-full">Trust for Advanced Skills</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="companies.html">For Companies</a></li>
+      <li><a href="trainees.html">Trainees &amp; Alumni</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <button class="btn btn-outline" id="navContactBtn">Partner With us</button>
+      <button class="btn btn-waitlist" id="navWaitlistBtn">
+        Join Waitlist <span class="badge">Jun 2026</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-pill">Trust for Advanced Skills</div>
+        <h1 class="hero-title">
+          Transforming Engineering<br/>
+          Graduates into <em>Industry-Ready</em><br/>
+          Engineers
+        </h1>
+        <p class="hero-desc">
+          T.A.S bridges the gap between academic learning and industry expectations
+          by preparing talented graduates from economically constrained backgrounds
+          for careers in advanced technology fields like VLSI and AI.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-waitlist btn-lg" id="heroWaitlistBtn">
+            Join Waitlist — Next Batch Jun 2026
+          </button>
+          <a href="#partner" class="btn btn-outline btn-lg">Partner With Us</a>
+        </div>
+      </div>
+      <div class="pipeline-card">
+        <p class="pipeline-card-title">The Transformation Pipeline</p>
+        <ul class="pipeline-steps-list">
+          <li class="pipeline-item">
+            <div class="pipeline-icon-wrap">🎓</div>
+            <div class="pipeline-item-text"><strong>Engineering Graduates</strong><span>Talented students from economically constrained backgrounds</span></div>
+          </li>
+          <li class="pipeline-item">
+            <div class="pipeline-icon-wrap">⚙️</div>
+            <div class="pipeline-item-text"><strong>Rigorous Training at T.A.S</strong><span>Industry-aligned VLSI &amp; AI curriculum with expert mentors</span></div>
+          </li>
+          <li class="pipeline-item">
+            <div class="pipeline-icon-wrap">🛠️</div>
+            <div class="pipeline-item-text"><strong>Industry-Ready Engineers</strong><span>Technically capable, professionally reliable, placement-ready</span></div>
+          </li>
+          <li class="pipeline-item">
+            <div class="pipeline-icon-wrap">💼</div>
+            <div class="pipeline-item-text"><strong>Careers in Advanced Technology</strong><span>VLSI, AI, semiconductor, and deep-tech roles</span></div>
+          </li>
+          <li class="pipeline-item">
+            <div class="pipeline-icon-wrap">🏠</div>
+            <div class="pipeline-item-text"><strong>Family &amp; Social Upliftment</strong><span>Breaking economic barriers, one engineer at a time</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHALLENGE ═════════════════════════════════════ -->
+<section class="challenge" id="challenge">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">The Problem We Solve</span>
+      <h2 class="section-title">The Talent Gap in Engineering</h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-top:14px;">Every year thousands of engineering graduates enter the workforce, yet many struggle to meet industry's practical expectations — while companies keep searching for engineers who can contribute from day one.</p>
+    </div>
+    <div class="challenge-grid">
+      <div class="challenge-card">
+        <span class="challenge-num">01</span>
+        <h4>The Talent Gap</h4>
+        <p>Thousands of engineering graduates enter the workforce each year, yet many struggle to meet the practical expectations of industry. Companies continue searching for engineers who can contribute from day one — and finding very few.</p>
+      </div>
+      <div class="challenge-card">
+        <span class="challenge-num">02</span>
+        <h4>Economic Barriers to Opportunity</h4>
+        <p>Many capable graduates from economically constrained families lack access to the advanced training needed to enter high-technology fields such as VLSI and AI. Financial barriers shut out the most talented before they even begin.</p>
+      </div>
+    </div>
+    <div class="bridge-box" style="margin-top:24px;">
+      <span class="bridge-icon">🌉</span>
+      <p><strong>T.A.S bridges this gap</strong> — by preparing graduates to become industry-ready engineers through rigorous, structured, and fully supported training designed around real industry needs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ IMPACT ════════════════════════════════════════ -->
+<section id="impact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Impact</span>
+      <h2 class="section-title">Impact in Numbers</h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-top:14px;">Every number here represents a life changed, a career launched, and a family uplifted.</p>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card"><div class="impact-num"><span class="counter" data-target="120">0</span>+</div><div class="impact-label">Trainees Enrolled</div></div>
+      <div class="impact-card"><div class="impact-num"><span class="counter" data-target="4800">0</span>+</div><div class="impact-label">Training Days Delivered</div></div>
+      <div class="impact-card"><div class="impact-num"><span class="counter" data-target="950">0</span>+</div><div class="impact-label">Engineering Problems Solved</div></div>
+      <div class="impact-card"><div class="impact-num"><span class="counter" data-target="80">0</span>+</div><div class="impact-label">Alumni in Industry</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PARTNERS ══════════════════════════════════════ -->
+<section class="partners" id="partners">
+  <div class="container">
+    <div class="section-header" style="text-align:center;">
+      <span class="section-label">Industry Partners</span>
+      <h2 class="section-title" style="text-align:center;">Companies Engaging With Our Talent</h2>
+      <div class="divider" style="margin:14px auto 0;"></div>
+      <p class="section-sub" style="margin:14px auto 0;text-align:center;">Industry partnerships help us align training with real-world engineering expectations — and connect our graduates to the right opportunities.</p>
+    </div>
+    <div class="partners-row">
+      <div class="partner-logo"><img src="https://ojassynergy.com/Tas/images/scaleflux.jpg" alt="ScaleFlux" /></div>
+      <div class="partner-logo"><img src="https://ojassynergy.com/Tas/images/proxelera.jpeg" alt="Proxelera" /></div>
+      <div class="partner-logo"><img src="https://ojassynergy.com/Tas/images/bitsilica.jpeg" alt="BitSilica" /></div>
+      <div class="partner-logo"><img src="https://ojassynergy.com/Tas/images/amd.jpg" alt="AMD" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRINCIPLES ════════════════════════════════════ -->
+<section class="principles" id="principles">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Our Principles</span>
+      <h2 class="section-title">The Foundation of Every Engineer Trained at T.A.S</h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-top:14px;">We don't just build technical skills. We shape engineers who are disciplined, professional, and relentlessly dedicated.</p>
+    </div>
+    <div class="principles-grid">
+      <div class="principle-card"><div class="principle-icon-wrap">🎯</div><h4>Discipline</h4><p>At T.A.S, discipline is the backbone of growth. Our trainees follow structured schedules, rigorous practice routines, and consistent evaluation to develop strong engineering habits that last a lifetime.</p></div>
+      <div class="principle-card"><div class="principle-icon-wrap">🤝</div><h4>Professional Conduct</h4><p>Engineers must work in teams and communicate effectively. We train our students to demonstrate professionalism, accountability, and the ethical conduct expected in real industry environments.</p></div>
+      <div class="principle-card"><div class="principle-icon-wrap">🚀</div><h4>Dedication</h4><p>Advanced technology careers demand persistence and deep focus. Our trainees cultivate dedication to problem solving, continuous learning, and delivering high-quality engineering outcomes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ══════════════════════════════════ -->
+<section class="testimonials" id="alumni">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Alumni Voices</span>
+      <h2 class="section-title">Voices from Our Alumni</h2>
+      <div class="divider"></div>
+      <p class="section-sub" style="margin-top:14px;">Real stories from engineers who came through T.A.S and went on to build real careers.</p>
+    </div>
+  </div>
+  <div class="testimonials-track-wrap">
+    <div class="testimonials-track">
+      <div class="testimonial-card"><p class="testimonial-quote">"The training at T.A.S helped me transition from theoretical learning to real engineering problem solving. I joined as a confused graduate and left as a confident VLSI engineer."</p><div class="testimonial-author"><div class="author-avatar">RK</div><div class="author-info"><strong>Ravi Kumar</strong><span>Physical Design Engineer · Qualcomm</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"Without T.A.S, I would never have had access to this level of training. The mentors treated us like professionals from day one. It changed my family's life."</p><div class="testimonial-author"><div class="author-avatar">PS</div><div class="author-info"><strong>Priya Suresh</strong><span>RTL Design Engineer · Intel</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"The discipline I built at T.A.S is what sets me apart at work. The structured schedule was tough but it shaped the way I approach engineering problems every single day."</p><div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><strong>Arjun Mehta</strong><span>Verification Engineer · Synopsys</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"Coming from a small town with very limited resources, T.A.S was my gateway. The real-world projects and industry mentors made all the difference in my career."</p><div class="testimonial-author"><div class="author-avatar">SN</div><div class="author-info"><strong>Sneha Nair</strong><span>VLSI Intern → FTE · Texas Instruments</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"The professional conduct training was as valuable as the technical modules. I walked into my first interview knowing exactly how to present myself — and I got the offer."</p><div class="testimonial-author"><div class="author-avatar">VR</div><div class="author-info"><strong>Vikram Rao</strong><span>Analog Design Engineer · NXP</span></div></div></div>
+      <!-- Duplicates for infinite loop -->
+      <div class="testimonial-card"><p class="testimonial-quote">"The training at T.A.S helped me transition from theoretical learning to real engineering problem solving. I joined as a confused graduate and left as a confident VLSI engineer."</p><div class="testimonial-author"><div class="author-avatar">RK</div><div class="author-info"><strong>Ravi Kumar</strong><span>Physical Design Engineer · Qualcomm</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"Without T.A.S, I would never have had access to this level of training. The mentors treated us like professionals from day one. It changed my family's life."</p><div class="testimonial-author"><div class="author-avatar">PS</div><div class="author-info"><strong>Priya Suresh</strong><span>RTL Design Engineer · Intel</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"The discipline I built at T.A.S is what sets me apart at work. The structured schedule was tough but it shaped the way I approach engineering problems every single day."</p><div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><strong>Arjun Mehta</strong><span>Verification Engineer · Synopsys</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"Coming from a small town with very limited resources, T.A.S was my gateway. The real-world projects and industry mentors made all the difference in my career."</p><div class="testimonial-author"><div class="author-avatar">SN</div><div class="author-info"><strong>Sneha Nair</strong><span>VLSI Intern → FTE · Texas Instruments</span></div></div></div>
+      <div class="testimonial-card"><p class="testimonial-quote">"The professional conduct training was as valuable as the technical modules. I walked into my first interview knowing exactly how to present myself — and I got the offer."</p><div class="testimonial-author"><div class="author-avatar">VR</div><div class="author-info"><strong>Vikram Rao</strong><span>Analog Design Engineer · NXP</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ════════════════════════════════════════════ -->
+<section class="cta-section" id="apply">
+  <div class="container">
+    <span class="section-label">Join T.A.S</span>
+    <h2 class="section-title">Ready to Transform Your Career?</h2>
+    <p class="section-sub">Applications for the next batch open in June 2026. Join the waitlist now and be the first to know.</p>
+    <div class="cta-row">
+      <button class="btn btn-lg btn-cta-white" id="ctaWaitlistBtn">Join Waitlist — Jun 2026 →</button>
+      <button class="btn btn-lg btn-cta-outline" id="ctaContactBtn">Contact T.A.S</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-abbr">T.A.S</div>
+        <div class="footer-brand-full">Trust for Advanced Skills</div>
+        <p class="footer-desc">Empowering economically constrained engineering graduates with industry-ready VLSI and AI training.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Program</h5>
+        <ul class="footer-links">
+          <li><a href="#">VLSI Training</a></li>
+          <li><a href="#">AI Track</a></li>
+          <li><a href="#">Mentorship</a></li>
+          <li><a href="#">Placement Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Links</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="companies.html">For Companies</a></li>
+          <li><a href="trainees.html">Trainees &amp; Alumni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul class="footer-links">
+          <li><a href="mailto:contact@advanceskilltrust.in">contact@advanceskilltrust.in</a></li>
+          <li><a href="tel:+918341108696">+91 83411 08696</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Trust for Advanced Skills (T.A.S). All rights reserved.</span>
+      <span><a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─────────────────────────────────────────────────────
+  // CONFIGURATION
+  // Replace the placeholder below with your actual
+  // Power Automate HTTP trigger URL after setup.
+  // ─────────────────────────────────────────────────────
+  const POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
+
+  // ── Modal open / close ────────────────────────────
+  const overlay  = document.getElementById('waitlistOverlay');
+  const modal    = document.getElementById('waitlistModal');
+  const closeBtn = document.getElementById('modalClose');
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('wl-name').focus(), 300);
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    // Reset form after close animation
+    setTimeout(resetForm, 300);
+  }
+
+  ['navWaitlistBtn','heroWaitlistBtn','ctaWaitlistBtn'].forEach(id => {
+    document.getElementById(id).addEventListener('click', openModal);
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+  });
+
+  // ── XSS sanitisation helper ───────────────────────
+  function sanitise(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str.trim()));
+    return div.innerHTML;
+  }
+
+  // ── Email format validation ───────────────────────
+  function isValidEmail(email) {
+    // RFC-5322 simplified pattern
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  }
+
+  // ── Field-level error helpers ─────────────────────
+  function setError(groupId, inputEl, show) {
+    const group = document.getElementById(groupId);
+    if (show) {
+      group.classList.add('has-error');
+      inputEl.classList.add('error');
+    } else {
+      group.classList.remove('has-error');
+      inputEl.classList.remove('error');
+    }
+  }
+
+  // ── Reset form to initial state ───────────────────
+  function resetForm() {
+    document.getElementById('wl-name').value  = '';
+    document.getElementById('wl-email').value = '';
+    setError('nameGroup',  document.getElementById('wl-name'),  false);
+    setError('emailGroup', document.getElementById('wl-email'), false);
+    document.getElementById('modalFormView').style.display    = '';
+    document.getElementById('modalSuccessView').style.display = 'none';
+    setSubmitting(false);
+  }
+
+  // ── Submitting state ──────────────────────────────
+  function setSubmitting(on) {
+    const btn     = document.getElementById('modalSubmit');
+    const label   = document.getElementById('submitLabel');
+    const spinner = document.getElementById('submitSpinner');
+    btn.disabled          = on;
+    label.style.display   = on ? 'none' : '';
+    spinner.style.display = on ? 'block' : 'none';
+  }
+
+  // ── Form submission ───────────────────────────────
+  document.getElementById('modalSubmit').addEventListener('click', async () => {
+    const nameEl  = document.getElementById('wl-name');
+    const emailEl = document.getElementById('wl-email');
+
+    const rawName  = nameEl.value.trim();
+    const rawEmail = emailEl.value.trim().toLowerCase();
+
+    // Client-side validation
+    let valid = true;
+
+    if (!rawName) {
+      setError('nameGroup', nameEl, true);
+      valid = false;
+    } else {
+      setError('nameGroup', nameEl, false);
+    }
+
+    if (!rawEmail || !isValidEmail(rawEmail)) {
+      setError('emailGroup', emailEl, true);
+      document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+      valid = false;
+    } else {
+      setError('emailGroup', emailEl, false);
+    }
+
+    if (!valid) return;
+
+    // Sanitise before sending
+    const name  = sanitise(rawName);
+    const email = sanitise(rawEmail);
+
+    setSubmitting(true);
+
+    try {
+      const res = await fetch(POWER_AUTOMATE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:      name,
+          email:     email,
+          timestamp: new Date().toISOString(),
+          source:    'TAS Website Waitlist'
+        })
+      });
+
+      // Power Automate returns 200 or 202 on success
+      if (res.ok) {
+        // Check if Power Automate flagged it as a duplicate
+        let isDuplicate = false;
+        try {
+          const json = await res.json();
+          if (json && json.duplicate === true) isDuplicate = true;
+        } catch(_) {}
+
+        if (isDuplicate) {
+          // Show a friendly already-registered message
+          setError('emailGroup', emailEl, true);
+          document.getElementById('emailError').textContent =
+            'This email is already on the waitlist — we\'ll be in touch!';
+          setSubmitting(false);
+        } else {
+          showSuccess();
+        }
+      } else {
+        throw new Error('Server error');
+      }
+    } catch (err) {
+      setSubmitting(false);
+      alert('Something went wrong. Please try again or email us at contact@advanceskilltrust.in');
+    }
+  });
+
+  function showSuccess() {
+    document.getElementById('modalFormView').style.display    = 'none';
+    document.getElementById('modalSuccessView').style.display = 'block';
+  }
+
+  // ── Inline validation on blur ─────────────────────
+  document.getElementById('wl-name').addEventListener('blur', function() {
+    setError('nameGroup', this, !this.value.trim());
+  });
+  document.getElementById('wl-email').addEventListener('blur', function() {
+    const v = this.value.trim();
+    const bad = !v || !isValidEmail(v);
+    setError('emailGroup', this, bad);
+    if (bad) document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+  });
+
+  // ══════════════════════════════════════════════════════
+  // EMPLOYER CONTACT MODAL
+  // Replace with your second Power Automate HTTP trigger
+  // URL (pointing to the Employer Enquiries Excel sheet/tab)
+  // ══════════════════════════════════════════════════════
+  const EMP_POWER_AUTOMATE_URL = 'YOUR_EMPLOYER_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
+
+  const empOverlay  = document.getElementById('empModalOverlay');
+  const empCloseBtn = document.getElementById('empModalClose');
+
+  function openEmpModal() {
+    empOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('emp-name').focus(), 300);
+  }
+
+  function closeEmpModal() {
+    empOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(resetEmpForm, 300);
+  }
+
+  ['navContactBtn', 'ctaContactBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', openEmpModal);
+  });
+
+  empCloseBtn.addEventListener('click', closeEmpModal);
+  empOverlay.addEventListener('click', (e) => { if (e.target === empOverlay) closeEmpModal(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && empOverlay.classList.contains('open')) closeEmpModal();
+  });
+
+  // Intent pill selection
+  let selectedIntent = 'Hire Graduates';
+  document.querySelectorAll('.intent-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.intent-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      selectedIntent = pill.dataset.value;
+    });
+  });
+
+  // Employer field helpers
+  function setEmpError(groupId, inputEl, show) {
+    const group = document.getElementById(groupId);
+    if (show) { group.classList.add('has-error'); inputEl.classList.add('error'); }
+    else       { group.classList.remove('has-error'); inputEl.classList.remove('error'); }
+  }
+
+  function resetEmpForm() {
+    ['emp-name','emp-company','emp-email','emp-msg'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    setEmpError('empNameGroup',    document.getElementById('emp-name'),    false);
+    setEmpError('empCompanyGroup', document.getElementById('emp-company'), false);
+    setEmpError('empEmailGroup',   document.getElementById('emp-email'),   false);
+    // Reset intent pills
+    document.querySelectorAll('.intent-pill').forEach(p => p.classList.remove('selected'));
+    document.querySelector('.intent-pill[data-value="Hire Graduates"]').classList.add('selected');
+    selectedIntent = 'Hire Graduates';
+    document.getElementById('empFormView').style.display    = '';
+    document.getElementById('empSuccessView').style.display = 'none';
+    setEmpSubmitting(false);
+  }
+
+  function setEmpSubmitting(on) {
+    const btn     = document.getElementById('empSubmit');
+    const label   = document.getElementById('empSubmitLabel');
+    const spinner = document.getElementById('empSpinner');
+    btn.disabled          = on;
+    label.style.display   = on ? 'none' : '';
+    spinner.style.display = on ? 'block' : 'none';
+  }
+
+  document.getElementById('empSubmit').addEventListener('click', async () => {
+    const nameEl    = document.getElementById('emp-name');
+    const companyEl = document.getElementById('emp-company');
+    const emailEl   = document.getElementById('emp-email');
+    const msgEl     = document.getElementById('emp-msg');
+
+    const rawName    = nameEl.value.trim();
+    const rawCompany = companyEl.value.trim();
+    const rawEmail   = emailEl.value.trim().toLowerCase();
+    const rawMsg     = msgEl.value.trim();
+
+    let valid = true;
+
+    if (!rawName)    { setEmpError('empNameGroup',    nameEl,    true); valid = false; }
+    else               setEmpError('empNameGroup',    nameEl,    false);
+
+    if (!rawCompany) { setEmpError('empCompanyGroup', companyEl, true); valid = false; }
+    else               setEmpError('empCompanyGroup', companyEl, false);
+
+    if (!rawEmail || !isValidEmail(rawEmail)) {
+      setEmpError('empEmailGroup', emailEl, true);
+      valid = false;
+    } else {
+      setEmpError('empEmailGroup', emailEl, false);
+    }
+
+    if (!valid) return;
+
+    const name    = sanitise(rawName);
+    const company = sanitise(rawCompany);
+    const email   = sanitise(rawEmail);
+    const message = sanitise(rawMsg);
+
+    setEmpSubmitting(true);
+
+    try {
+      const res = await fetch(EMP_POWER_AUTOMATE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          company,
+          email,
+          intent:    selectedIntent,
+          message,
+          timestamp: new Date().toISOString(),
+          source:    'TAS Website Employer Enquiry'
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('empFormView').style.display    = 'none';
+        document.getElementById('empSuccessView').style.display = 'block';
+      } else {
+        throw new Error('Server error');
+      }
+    } catch(err) {
+      setEmpSubmitting(false);
+      alert('Something went wrong. Please try again or WhatsApp us at +91 83411 08696');
+    }
+  });
+
+  // Blur validation for employer fields
+  document.getElementById('emp-name').addEventListener('blur', function() {
+    setEmpError('empNameGroup', this, !this.value.trim());
+  });
+  document.getElementById('emp-company').addEventListener('blur', function() {
+    setEmpError('empCompanyGroup', this, !this.value.trim());
+  });
+  document.getElementById('emp-email').addEventListener('blur', function() {
+    const v = this.value.trim();
+    setEmpError('empEmailGroup', this, !v || !isValidEmail(v));
+  });
+
+  // ── Animated counters ─────────────────────────────
+  const counters = document.querySelectorAll('.counter');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.target;
+      let cur = 0;
+      const step = target / (1600 / 16);
+      const t = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        el.textContent = Math.floor(cur).toLocaleString();
+        if (cur >= target) clearInterval(t);
+      }, 16);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => io.observe(c));
+</script>
+</body>
+</html>
