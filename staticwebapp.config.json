@@ -1,6 +1,13 @@
 {
-    "navigationFallback": {
-      "rewrite": "/index.html",
-      "exclude": ["/assets/*", "/*.{css,js,ico,png,svg}"]
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/*.{css,js,ico,png,svg}"]
+  },
+  "routes": [
+    {
+      "route": "/",
+      "redirect": "https://advanceskilltrust.in/pre-application.html",
+      "statusCode": 302
     }
-  }
+  ]
+}

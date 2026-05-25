@@ -5,6 +5,33 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Apply for VLSI Frontend Training — T.A.S</title>
+    <script>
+      (function() {
+        var LANDING_URL = 'https://advanceskilltrust.in/vlsi-apply.html';
+    
+        try {
+          var raw = localStorage.getItem('tas_landing_seen');
+    
+          if (!raw) {
+            window.location.replace(LANDING_URL);
+            return;
+          }
+    
+          var data = JSON.parse(raw);
+    
+          if (!data.expiry || Date.now() > data.expiry) {
+            localStorage.removeItem('tas_landing_seen');
+            window.location.replace(LANDING_URL);
+            return;
+          }
+          // Flag valid — allow React to load normally
+    
+        } catch(e) {
+          // Any error — redirect to landing page
+          window.location.replace(LANDING_URL);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
