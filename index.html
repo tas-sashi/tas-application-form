@@ -10,24 +10,27 @@
         var LANDING_URL = 'https://www.advanceskilltrust.in/pre-application.html';
     
         try {
-          var raw = localStorage.getItem('tas_landing_seen');
+          var params = new URLSearchParams(window.location.search);
+          var ref = params.get('ref');
     
-          if (!raw) {
-            window.location.replace(LANDING_URL);
-            return;
+          if (ref) {
+            // Came from landing page — store in sessionStorage and clean URL
+            sessionStorage.setItem('tas_ref', ref);
+            // Remove ref from URL without reloading
+            window.history.replaceState({}, '', window.location.pathname);
+            return; // Allow form to load
           }
     
-          var data = JSON.parse(raw);
-    
-          if (!data.expiry || Date.now() > data.expiry) {
-            localStorage.removeItem('tas_landing_seen');
-            window.location.replace(LANDING_URL);
-            return;
+          // Check sessionStorage for returning users within same session
+          var stored = sessionStorage.getItem('tas_ref');
+          if (stored) {
+            return; // Allow form to load
           }
-          // Flag valid — allow React to load normally
+    
+          // No ref, no session — redirect to landing page
+          window.location.replace(LANDING_URL);
     
         } catch(e) {
-          // Any error — redirect to landing page
           window.location.replace(LANDING_URL);
         }
       })();
