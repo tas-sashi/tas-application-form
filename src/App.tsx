@@ -9,7 +9,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-teal-50">
+    <div className="min-h-screen bg-teal-50 flex flex-col">
 
       {/* ── NAVBAR ── */}
       <nav className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-50">
@@ -34,7 +34,7 @@ export default function App() {
 
           {/* Back link — right */}
           
-            <a href="#"
+            <a href="https://www.advanceskilltrust.in"
             className="flex items-center gap-1.5 text-sm font-medium text-teal-700
               hover:text-teal-900 transition-colors group z-10 flex-shrink-0"
           >
@@ -66,23 +66,26 @@ export default function App() {
       </div>
 
       {/* ── FORM ── */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 flex-1 w-full">
         <div ref={formCardRef} className="scroll-mt-16">
           <FormWizard scrollToForm={scrollToForm} />
         </div>
       </main>
 
       {/* ── FOOTER ── */}
-      <footer className="mt-12 border-t border-gray-100 bg-white py-5">
+      <footer className="mt-auto border-t border-gray-100 bg-white py-5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row
           items-center justify-between gap-2 text-xs text-gray-400">
           <span>© {new Date().getFullYear()} Trust for Advanced Skills. All rights reserved.</span>
-          <span>
-            For support, contact{' '}
-            <a href="mailto:info@tas.org.in" className="text-teal-600 hover:underline">
-              info@tas.org.in
+          <div className="flex items-center gap-2">
+            <a href="mailto:contact@advanceskilltrust.in" className="text-teal-600 hover:underline">
+              contact@advanceskilltrust.in
             </a>
-          </span>
+            <span>|</span>
+            <a href="tel:+918341108696" className="text-teal-600 hover:underline">
+              +91 83411 08696
+            </a>
+          </div>
         </div>
       </footer>
 

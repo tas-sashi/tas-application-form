@@ -35,10 +35,7 @@ export function Page7WhyYou({ onSave, onBack, cameFromReview }: Props) {
   return (
     <form onSubmit={handleSubmit((data) => onSave(data, false))} noValidate>
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Why You?</h2>
-        <p className="text-sm text-gray-500 mt-1">
-          Tell us why you're a great fit for this program.
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900">Tell us how you are eligible for this program</h2>
       </div>
 
       <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 mb-6">

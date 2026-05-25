@@ -8,6 +8,12 @@
     <script>
       (function() {
         var LANDING_URL = 'https://www.advanceskilltrust.in/pre-application.html';
+
+        // Skip gate check in local development
+        if (window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1') {
+          return;
+        }
     
         try {
           var params = new URLSearchParams(window.location.search);
