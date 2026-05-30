@@ -58,8 +58,8 @@ export function SummaryPage({ onEdit }: Props) {
   const handleSubmit = async () => {
     setSubmitting(true)
     const result = await submitApplication(formData)
-    if (result.success && result.applicationId) {
-      setSubmitted(result.applicationId)
+    if (result.success) {
+      setSubmitted(result.applicationId ?? '')
     } else {
       setFailure(result.message)
     }
