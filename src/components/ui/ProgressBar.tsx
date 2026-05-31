@@ -7,6 +7,7 @@ interface ProgressBarProps {
   completedSteps: Set<number>
   reviewUnlocked: boolean
   summaryStep: number
+  cameFromReview: boolean
 }
 
 export function ProgressBar({
@@ -16,9 +17,11 @@ export function ProgressBar({
   completedSteps,
   reviewUnlocked,
   summaryStep,
+  cameFromReview,
 }: ProgressBarProps) {
   const isAccessible = (idx: number) => {
-    if (idx === summaryStep) return reviewUnlocked
+    if (idx === summaryStep) return reviewUnlocked && !cameFromReview
+    if (reviewUnlocked) return idx <= currentStep  // ← only allow backward navigation
     return completedSteps.has(idx) || idx <= currentStep
   }
 

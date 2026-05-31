@@ -114,6 +114,7 @@ export function FormWizard({ scrollToForm }: Props) {
         completedSteps={completedSteps}
         reviewUnlocked={reviewUnlocked}
         summaryStep={SUMMARY_STEP}
+        cameFromReview={cameFromReview}
       />
 
       {isSummary && (

@@ -47,7 +47,7 @@ export function Page6MTech({ onSave, onBack, cameFromReview }: Props) {
           <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         <p className="text-sm text-teal-700">
-          This section is <strong>optional</strong>. If you have not completed or are not
+          This section is <strong>optional</strong>. If you are not
           pursuing M.Tech / M.E, click <strong>Next</strong> to continue.
         </p>
       </div>

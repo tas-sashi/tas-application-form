@@ -126,7 +126,7 @@ export function SummaryPage({ onEdit }: Props) {
             <Row label="CGPA / Percentage" value={mtech.cgpaOrPercentage} />
         </SectionCard>
 
-        <SectionCard title="Training & Internships" step={5} onEdit={onEdit}>
+        <SectionCard title="Training & Internships" step={6} onEdit={onEdit}>
             <Row label="Course Done" value={
                 training.courseDone === 'Other'
                 ? `Other — ${training.courseDoneOther}`
@@ -141,7 +141,7 @@ export function SummaryPage({ onEdit }: Props) {
             <Row label="Company" value={training.internshipCompany} />
         </SectionCard>
 
-        <SectionCard title="Why You?" step={6} onEdit={onEdit}>
+        <SectionCard title="Why You?" step={7} onEdit={onEdit}>
           <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
             {whyYou.fitStatement}
           </p>
