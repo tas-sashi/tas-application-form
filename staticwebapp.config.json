@@ -1,9 +1,11 @@
 {
-  "routes": [
-    {
-      "route": "/*",
-      "redirect": "https://forms.gle/51kzMwiouE8J63ev7",
-      "statusCode": 302
+    "navigationFallback": {
+      "rewrite": "/index.html",
+      "exclude": ["/assets/*", "/*.{css,js,ico,png,svg}"]
+    },
+    "mimeTypes": {
+      ".js": "text/javascript",
+      ".mjs": "text/javascript",
+      ".css": "text/css"
     }
-  ]
-}
+  }
